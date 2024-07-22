@@ -1,0 +1,15 @@
+#mainDiv{
+    height: 75px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(253, 253, 251);
+}
+.cdiv{
+    display: flex;
+    justify-content: space-around;
+}
+.icon{
+    width: 20px;
+    height: 20px;
+}
