@@ -1,93 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import {
-//     Box,
-//     Image,
-//     Text,
-//     Button,
-//     Stack,
-//     useColorModeValue,
-//     Spinner,
-// } from '@chakra-ui/react';
-// import { useParams } from 'react-router-dom';
-
-// const ProductDetailsPage = () => {
-//     const { productId } = useParams();
-//     const [product, setProduct] = useState(null);
-//     const [loading, setLoading] = useState(true);
-
-//     useEffect(() => {
-//         fetch(`https://fakestoreapi.com/products/${productId}`)
-//             .then(res => res.json())
-//             .then(data => {
-//                 setProduct(data);
-//                 setLoading(false);
-//             })
-//             .catch(error => {
-//                 console.error('Error fetching product details:', error);
-//                 setLoading(false);
-//             });
-//     }, [productId]);
-
-//     if (loading) {
-//         return (
-//             <Box
-//                 minH="100vh"
-//                 display="flex"
-//                 alignItems="center"
-//                 justifyContent="center"
-//             >
-//                 <Spinner size="xl" />
-//             </Box>
-//         );
-//     }
-
-//     if (!product) {
-//         return (
-//             <Box
-//                 minH="100vh"
-//                 display="flex"
-//                 alignItems="center"
-//                 justifyContent="center"
-//             >
-//                 <Text>Product not found</Text>
-//             </Box>
-//         );
-//     }
-
-//     return (
-//         <Box p={5}>
-//             <Stack spacing={8} direction={{ base: 'column', md: 'row' }}>
-//                 <Image
-//                     src={product.image}
-//                     alt={product.title}
-//                     boxSize="300px"
-//                     objectFit="contain"
-//                     mx="auto"
-//                 />
-//                 <Stack spacing={4}>
-//                     <Text fontSize="2xl" fontWeight="bold">
-//                         {product.title}
-//                     </Text>
-//                     <Text fontSize="lg">{product.description}</Text>
-//                     <Text fontSize="xl" fontWeight="bold">
-//                         ${product.price}
-//                     </Text>
-//                     <Text fontSize="md">Rating: {product.rating.rate} / 5</Text>
-//                     <Button colorScheme="teal">Buy Now</Button>
-//                     <Button colorScheme="teal" variant="outline">
-//                         Add to Cart
-//                     </Button>
-//                 </Stack>
-//             </Stack>
-//         </Box>
-//     );
-// };
-
-// export default ProductDetailsPage;
-
-
-// src/pages/ProductDetailsPage.js
-
 'use client'
 
 import {
@@ -110,10 +20,12 @@ import { MdLocalShipping } from 'react-icons/md'
 import { useParams } from 'react-router-dom'; // Import useParams for fetching product ID
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useCart } from '../CartContext'; // Import useCart for cart context
 
 export default function ProductDetailsPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const { addToCart } = useCart(); // Use addToCart function from cart context
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -239,7 +151,9 @@ export default function ProductDetailsPage() {
             _hover={{
               transform: 'translateY(2px)',
               boxShadow: 'lg',
-            }}>
+            }}
+            onClick={() => addToCart(product)} // Add to cart functionality
+          >
             Buy Now
           </Button>
           <Button
@@ -254,7 +168,9 @@ export default function ProductDetailsPage() {
             _hover={{
               transform: 'translateY(2px)',
               boxShadow: 'lg',
-            }}>
+            }}
+            onClick={() => addToCart(product)} // Add to cart functionality
+          >
             Add to cart
           </Button>
 
